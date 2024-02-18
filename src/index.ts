@@ -17,7 +17,7 @@ export default {
     const interaction: Interaction = await req.json();
 
     if (interaction.type === InteractionType.PING) {
-      if(!verifySignature(req, path)) {
+      if(!await verifySignature(req, path)) {
         return new Response("invalid request signature", {status: 401});
       }
       return new Response(
