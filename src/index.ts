@@ -28,7 +28,7 @@ export default {
     }
 
     return new Response(
-      JSON.stringify(routes[path]( inter = interaction )),
+      JSON.stringify(routes[path](interaction)),
     );
   }
 };
