@@ -11,8 +11,9 @@ const routes = {
 
 export default {
   async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    console.log(interaction);
     const interaction: Interaction = await req.json();
+
+    console.log(JSON.stringify(interaction, null, 2))
 
     if (interaction.type === InteractionType.PING) {
       return new Response(
