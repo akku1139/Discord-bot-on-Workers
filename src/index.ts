@@ -1,18 +1,40 @@
 import emoji from "./emoji";
 
-import { InteractionFunction } from "types/command";
+import { Interaction, InteractionCallbackType, InteractionFunction, InteractionType } from "types/command";
 
 export interface Env {
 }
 
 const routes = {
   "emoji": emoji,
-} satisfies {[x:string]: InteractionFunction};
+} satisfies { [x: string]: InteractionFunction };
 
 export default {
-	async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    return routes[new URL(req.url).pathname.replace(/^\/?(.*)\/?$/, "$1")](
-      inter = await req.json()
+  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const inter: Interaction = await req.json();
+
+    if (inter.type === InteractionType.PING) {
+      return new Response(
+        JSON.stringify(
+          {
+            type: InteractionCallbackType.PONG
+          }
+        ),
+        {
+          headers: { "Content-Type": "application/json" }
+        }
+      );
+    }
+
+    return new Response(
+      JSON.stringify(
+        routes[new URL(req.url).pathname.replace(/^\/?(.*)\/?$/, "$1")](
+          inter = inter,
+        )
+      ),
+      {
+        headers: { "Content-Type": "application/json" }
+      }
     );
-	}
+  }
 };

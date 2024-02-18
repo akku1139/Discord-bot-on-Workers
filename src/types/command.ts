@@ -39,8 +39,17 @@ export type Commands = Array<{
   ]
 }>;
 
+export enum InteractionType {
+  PING = 1,
+  APPLICATION_COMMAND,
+  MESSAGE_COMPONENT,
+  APPLICATION_COMMAND_AUTOCOMPLETE,
+  MODAL_SUBMIT,
+};
+
 // https://discord.com/developers/docs/interactions/application-commands#user-commands-example-interaction
 export type Interaction = {
+  type: InteractionType,
   data: {
     name: string,
   },
