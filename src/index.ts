@@ -11,9 +11,9 @@ const routes = {
 
 export default {
   async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    const inter: Interaction = await req.json();
+    const interaction: Interaction = await req.json();
 
-    if (inter.type === InteractionType.PING) {
+    if (interaction.type === InteractionType.PING) {
       return new Response(
         JSON.stringify(
           {
@@ -29,7 +29,7 @@ export default {
     return new Response(
       JSON.stringify(
         routes[new URL(req.url).pathname.replace(/^\/?(.*)\/?$/, "$1")](
-          inter = inter,
+          interaction = inter,
         )
       ),
       {
