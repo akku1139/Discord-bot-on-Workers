@@ -14,10 +14,11 @@ export default {
   async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> | Response {
     // POSTという前提
     const path = new URL(req.url).pathname.replace(/^\/?(.*)\/?$/, "$1");
-    const interaction: Interaction = await req.json();
+    const req_text = await req.text();
+    const interaction: Interaction = JSON.parse(req_text);
 
     if (interaction.type === InteractionType.PING) {
-      if(!await verifySignature(req, path)) {
+      if(!await verifySignature(req_text, req.headers, path)) {
         return new Response("invalid request signature", {status: 401});
       }
       return new Response(
