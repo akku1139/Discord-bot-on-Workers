@@ -5,5 +5,5 @@ const publicKeys = {
 };
 
 export async function verifySignature(req: Request, parh: string): Promise<boolean> {
-	return verifyKey(await req.text(), req.headers.get('x-signature-ed25519'), req.headers.get('x-signature-timestamp'), PUBLIC_KEY);
+	return verifyKey(await req.body?.tee(), req.headers.get('x-signature-ed25519'), req.headers.get('x-signature-timestamp'), PUBLIC_KEY);
 }
