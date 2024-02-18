@@ -1,4 +1,4 @@
-import { Commands, OptionType } from "types/commands";
+import { Commands, OptionType, InteractionCallbackType, CommandResponse, InteractionFunction } from "types/command";
 
 export const commands: Commands = [
   {
@@ -21,6 +21,15 @@ export const commands: Commands = [
   }
 ];
 
-export default emoji = () => {
-
+const emoji: InteractionFunction = (inter): CommandResponse => {
+  if(inter.data.name = "emoji") {
+    return {
+      type: InteractionCallbackType.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        content: "test",
+      }
+    }
+  }
 };
+
+export default emoji;
