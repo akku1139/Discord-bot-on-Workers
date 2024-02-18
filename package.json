@@ -8,6 +8,7 @@
     "start": "wrangler dev"
   },
   "dependencies": {
+    "discord-interactions": "^3.4.0"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231218.0",

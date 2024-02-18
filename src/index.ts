@@ -1,6 +1,7 @@
 import emoji from "./emoji";
 
-import { Interaction, InteractionCallbackType, InteractionFunction, InteractionType } from "types/command";
+import { Interaction, InteractionCallbackType, InteractionFunction, InteractionResponse, InteractionType } from "types/command";
+import { verifySignature } from "./verify";
 
 export interface Env {
 }
@@ -10,33 +11,23 @@ const routes = {
 } satisfies { [x: string]: InteractionFunction };
 
 export default {
-  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> | Response {
+    // POSTという前提
+    const path = new URL(req.url).pathname.replace(/^\/?(.*)\/?$/, "$1");
     const interaction: Interaction = await req.json();
 
-    console.log(JSON.stringify(interaction, null, 2))
-
     if (interaction.type === InteractionType.PING) {
+      if(!verifySignature(req, path)) {
+        return new Response("invalid request signature", {status: 401});
+      }
       return new Response(
-        JSON.stringify(
-          {
-            type: InteractionCallbackType.PONG
-          }
-        ),
-        {
-          headers: { "Content-Type": "application/json" }
-        }
+        JSON.stringify<InteractionResponse>({ type: InteractionCallbackType.PONG }),
+        { headers: { "Content-Type": "application/json" } }
       );
     }
 
     return new Response(
-      JSON.stringify(
-        routes[new URL(req.url).pathname.replace(/^\/?(.*)\/?$/, "$1")](
-          inter = interaction,
-        )
-      ),
-      {
-        headers: { "Content-Type": "application/json" }
-      }
+      JSON.stringify(routes[path]( inter = interaction )),
     );
   }
 };
