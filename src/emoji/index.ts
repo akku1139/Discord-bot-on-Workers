@@ -26,7 +26,7 @@ const emoji: InteractionFunction = (inter): InteractionResponse => {
     return {
       type: InteractionCallbackType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
-        content: "test",
+        content: `https://${ || "misskey.io"}/emoji/`,
       }
     }
   }

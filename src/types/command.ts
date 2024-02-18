@@ -47,11 +47,19 @@ export enum InteractionType {
   MODAL_SUBMIT,
 };
 
+export type InteractionOption = {
+  name: string,
+  type: OptionType,
+  value?: string | number | boolean,
+  focused?: boolean, // true if this option is the currently focused option for autocomplete
+};
+
 // https://discord.com/developers/docs/interactions/application-commands#user-commands-example-interaction
 export type Interaction = {
   type: InteractionType,
   data: {
     name: string,
+    options?: Array<InteractionOptions>,
   },
 };
 

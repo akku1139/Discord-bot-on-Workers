@@ -19,6 +19,7 @@ export default {
 
     if (interaction.type === InteractionType.PING) {
       if(!await verifySignature(req_text, req.headers, path)) {
+        // 時々実行しないと消される?
         return new Response("invalid request signature", {status: 401});
       }
       return new Response(
@@ -27,6 +28,7 @@ export default {
       );
     }
 
+    // if (type === InteractionType.APPLICATION_COMMAND)
     return new Response(
       JSON.stringify(routes[path](interaction)),
       { headers: { "Content-Type": "application/json" } }
