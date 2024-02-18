@@ -1,4 +1,4 @@
-import type { Message } from "./message";
+import type { Message } from "./message.ts";
 
 export enum CommandType {
   CHAT_INPUT = 1, // Slash commands; a text-based command that shows up when a user types /

@@ -1,5 +1,11 @@
 import type { InteractionOption } from "utils/option.ts";
 
-export function parseOptions(options: Array<InteractionOption>): {[name: string]: InteractionOption} {
+type Parsed = {[name: string]: InteractionOption};
 
+export function parseOptions(options: Array<InteractionOption>): Parsed {
+  let parsed: Parsed = {};
+  options.forEach((o) => {
+    parsed[o.name] = o;
+  });
+  return parsed;
 }

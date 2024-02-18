@@ -1,2 +1,2 @@
-import { commands as emojiCommands } from "@/emoji";
+import { commands as emojiCommands } from "@/emoji.ts";
 

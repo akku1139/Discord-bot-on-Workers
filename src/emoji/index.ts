@@ -1,4 +1,5 @@
-import { Commands, OptionType, InteractionCallbackType, InteractionResponse, InteractionFunction } from "types/command";
+import { Commands, OptionType, Interaction, InteractionCallbackType, InteractionResponse, InteractionFunction } from "types/command.ts";
+import { parseOptions } from "utils/option.ts";
 
 export const commands: Commands = [
   {
@@ -21,12 +22,13 @@ export const commands: Commands = [
   }
 ];
 
-const emoji: InteractionFunction = (inter): InteractionResponse => {
+const emoji: InteractionFunction = (inter: Interaction): InteractionResponse => {
+  const options = parseOptions(inter.data.options)
   if(inter.data.name = "emoji") {
     return {
       type: InteractionCallbackType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
-        content: `https://${ || "misskey.io"}/emoji/`,
+        content: `https://${ options.server || "misskey.io"}/emoji/${options.name}.webp`,
       }
     }
   }

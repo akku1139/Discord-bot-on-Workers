@@ -1,7 +1,7 @@
-import emoji from "./emoji";
+import emoji from "./emoji/index.ts";
 
-import { Interaction, InteractionCallbackType, InteractionFunction, InteractionResponse, InteractionType } from "types/command";
-import { verifySignature } from "./verify";
+import { Interaction, InteractionCallbackType, InteractionFunction, InteractionResponse, InteractionType } from "types/command.ts";
+import { verifySignature } from "./verify.ts";
 
 export interface Env {
 }
