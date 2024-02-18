@@ -29,7 +29,7 @@ export default {
     return new Response(
       JSON.stringify(
         routes[new URL(req.url).pathname.replace(/^\/?(.*)\/?$/, "$1")](
-          interaction = inter,
+          inter = interaction,
         )
       ),
       {
